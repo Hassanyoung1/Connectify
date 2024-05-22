@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Music Chat Page</title>
+    <link rel="stylesheet" href="chat.css" />
+  </head>
+  <body>
+    <div class="container">
+      <aside class="sidebar">
+        <h2>Chat</h2>
+        <ul class="user-list" id="user-list">
+          <li>
+            <button class="user-button" data-username="User 1">
+              <img src="https://via.placeholder.com/40" alt="User 1" />User 1
+            </button>
+          </li>
+          <li>
+            <button class="user-button" data-username="User 2">
+              <img src="https://via.placeholder.com/40" alt="User 2" />User 2
+            </button>
+          </li>
+          <li>
+            <button class="user-button" data-username="User 3">
+              <img src="https://via.placeholder.com/40" alt="User 3" />User 3
+            </button>
+          </li>
+        </ul>
+      </aside>
+
+      <main class="main-content">
+        <div class="music-player">
+          <div class="music-info">
+            <img src="https://via.placeholder.com/80" alt="Album Art" />
+            <div>
+              <h4>Song Title</h4>
+              <p>Artist Name</p>
+            </div>
+          </div>
+          <div class="music-controls">
+            <button id="prev-button">⏮️</button>
+            <button id="play-button">▶️</button>
+            <button id="pause-button" style="display: none">⏸️</button>
+            <button id="next-button">⏭️</button>
+          </div>
+        </div>
+
+        <div class="chat-container">
+          <!-- <div class="chat-container-inner"> -->
+          <header class="chat-header">
+            <img
+              src="https://via.placeholder.com/50"
+              alt="Chat User"
+              class="chat-img"
+            />
+            <h2 id="chat-username">Select a user to chat</h2>
+          </header>
+          <div class="chat-window" id="chat-window"></div>
+          <div class="chat-input-container">
+            <button id="emoji-button">😊</button>
+            <div class="emoji-picker" id="emoji-picker">
+              <button>😊</button>
+              <button>😂</button>
+              <button>😍</button>
+              <button>😎</button>
+              <button>😭</button>
+              <button>😡</button>
+              <button>👍</button>
+              <button>🙏</button>
+            </div>
+            <input
+              type="text"
+              id="chat-input"
+              placeholder="Type a message..."
+            />
+            <button id="send-button">Send</button>
+            <!-- </div> -->
+          </div>
+        </div>
+      </main>
+    </div>
+    <script src="chat.js"></script>
+  </body>
+</html>
