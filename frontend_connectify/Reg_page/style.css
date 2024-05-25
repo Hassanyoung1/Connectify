@@ -30,6 +30,12 @@ html {
   animation: fadeIn 1.5s ease-in-out;
 }
 
+.app-name {
+  color: red;
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
 .register-box h2 {
   margin: 20px 0 20px;
   color: #fff;
