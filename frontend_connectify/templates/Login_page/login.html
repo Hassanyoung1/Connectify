@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Connectify - Login Page</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='Login_page/styles.css') }}" />
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <meta
       name="google-signin-client_id"
@@ -32,10 +32,10 @@
           <button type="submit" class="btn">Login</button>
         </form>
         <p class="link-text">
-          Don't have an account? <a href="../Reg_page/reg.html">Register</a>
+          Don't have an account? <a href="{{ url_for('register') }}">Register</a>
         </p>
       </div>
     </div>
-    <script src="scripts.js"></script>
+    <script src="{{ url_for('static', filename='Login_page/scripts.js') }}"></script>
   </body>
 </html>

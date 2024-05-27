@@ -1,7 +1,7 @@
 # app/routes.py
 from flask import request, jsonify
 from app import app
-from spotify_api import search_track
+from backend_connectify.backend.routes.spotify_api import search_track
 
 @app.route('/search', methods=['GET'])
 def search():

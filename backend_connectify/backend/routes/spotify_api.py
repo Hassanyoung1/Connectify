@@ -1,6 +1,6 @@
-# spotify_api.py
+# backend_connectify/spotify_api.py
 import requests
-from spotify_auth import get_token
+from routes.spotify_auth import get_token
 
 def search_track(track_name):
     token = get_token()

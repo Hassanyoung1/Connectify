@@ -1,4 +1,4 @@
-# spotify_auth.py
+# backend_connectify/spotify_auth.py
 import requests
 import base64
 
