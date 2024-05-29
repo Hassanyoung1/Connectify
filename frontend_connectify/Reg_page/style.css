@@ -114,25 +114,3 @@ html {
     transform: translateY(0);
   }
 }
-
-.google-logo {
-  width: 20px !important; /* adjust as needed */
-  height: 20px !important; /* adjust as needed */
-}
-
-.g-signin2 {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-.g-signin2.customGButton {
-  display: inline-flex;
-  align-items: center;
-  background-color: #ffffff;
-  color: white;
-  width: 200px;
-  height: 40px;
-  border-radius: 25px;
-}

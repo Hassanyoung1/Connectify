@@ -4,22 +4,35 @@ document.addEventListener("DOMContentLoaded", () => {
   if (registerForm) {
     registerForm.addEventListener("submit", (e) => {
       e.preventDefault();
-      // Add our form submission logic here
-      alert("Registration form submitted!");
+
+      var username = e.target[0].value;
+      var email = e.target[1].value;
+      var password = e.target[2].value;
+      var confirmPassword = e.target[3].value;
+
+      fetch("http://localhost:5000/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: username,
+          email: email,
+          password: password,
+          confirmPassword: confirmPassword,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            window.location.href = "../user_profile_page/index.html";
+          } else {
+            console.log(data.message);
+          }
+        });
     });
   }
 });
-
-document
-  .getElementById("registerForm")
-  .addEventListener("submit", function (event) {
-    event.preventDefault();
-
-    // Validate form data here
-
-    // If the data is valid, redirect to the profile page
-    window.location.href = "../user_profile_page/index.html";
-  });
 
 function onSignIn(googleUser) {
   var profile = googleUser.getBasicProfile();
@@ -35,12 +48,4 @@ function onSignIn(googleUser) {
   }
 
   alert("Google Sign-In successful!");
-}
-
-function signOut() {
-  var auth2 = gapi.auth2.getAuthInstance();
-  auth2.signOut().then(function () {
-    console.log("User signed out.");
-    alert("User signed out.");
-  });
 }

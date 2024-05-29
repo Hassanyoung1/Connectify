@@ -125,13 +125,6 @@ html {
   }
 }
 
-.g-signin2 {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
 @media screen and (min-width: 600px) {
   .login-box {
     font-size: 15px;
