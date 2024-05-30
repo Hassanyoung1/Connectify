@@ -33,11 +33,7 @@
         <div class="music-player">
           <label for="music-upload" class="upload-button">Upload Music</label>
           <div class="music-info">
-            <img
-              id="album-art"
-              src="https://via.placeholder.com/80"
-              alt="Album Art"
-            />
+            <img src="https://via.placeholder.com/80" alt="Album Art" />
             <div>
               <h4 id="song-title">Song Title</h4>
               <p id="artist-name">Artist Name</p>
@@ -47,17 +43,34 @@
             type="file"
             id="music-upload"
             accept="audio/*"
-            style="display: none"
             multiple
+            style="display: none"
           />
-          <audio id="music-player" controls autoplay></audio>
-          <div class="music-controls">
-            <button id="prev-button">&#9664;</button>
-            <button id="play-button">&#9654;</button>
-            <button id="pause-button" style="display: none">
-              &#10074;&#10074;
-            </button>
-            <button id="next-button">&#9654;</button>
+
+          <audio id="music-player" style="display: none"></audio>
+          <div class="music-bar">
+            <div class="music-controls">
+              <button id="prev-button">⏮️</button>
+              <button id="play-button">▶️</button>
+              <button id="pause-button" style="display: none">⏸️</button>
+              <button id="next-button">⏭️</button>
+              <input
+                type="range"
+                id="volume-control"
+                min="0"
+                max="100"
+                value="50"
+              />
+            </div>
+
+            <input
+              type="range"
+              id="progress-bar"
+              min="0"
+              max="100"
+              value="0"
+              class="progress-bar"
+            />
           </div>
         </div>
 
