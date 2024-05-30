@@ -79,11 +79,10 @@ def login():
     data = request.get_json()
     email = data.get('email')
     password = data.get('password')
-    user = next((u for u in storage.all(UserWithLogin).values() if u.email == email), None)
-    
-    if user and check_password_hash(user.password_hash, password):
+    user = next((u for u in storage.all(User).values() if u.email == email), None)
+    if user and user.check_password(password):
         login_user(user)
-        return redirect(url_for('index'))  # Redirect to user profile page after successful login
+        return jsonify({'message': 'Login success!'}), 200 # Redirect to user profile page after successful login
     else:
         return jsonify({'error': 'Invalid email or password'}), 401
 

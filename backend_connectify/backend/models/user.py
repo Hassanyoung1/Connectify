@@ -37,7 +37,7 @@ class User(BaseModel, Base, SQLAlchemyUserMixin):
     playlists = relationship("Playlist", backref="user", cascade="all, delete")
     chatrooms = relationship("Chatroom", backref="user", cascade="all, delete")
     sessions = relationship("Session", backref="user", cascade="all, delete")
-'''
+    '''
     else:
         username = ""
         email = ""
@@ -45,18 +45,18 @@ class User(BaseModel, Base, SQLAlchemyUserMixin):
         playlists = []
         chatrooms = []
         sessions = []
-'''
-def __init__(self, *args, **kwargs):
-    """initializes user"""
-    super().__init__(*args, **kwargs)
-    self.username = kwargs.get('username', "")
-    self.email = kwargs.get('email', "")
-#   salt = bcrypt.gensalt()
-#   self.password_hash = bcrypt.hashpw(kwargs.get('password', "").encode("utf-8"), salt)
+    '''
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.username = kwargs.get('username', "")
+        self.email = kwargs.get('email', "")
+    #   salt = bcrypt.gensalt()
+    #   self.password_hash = bcrypt.hashpw(kwargs.get('password', "").encode("utf-8"), salt)
 
     def check_password(self, password):
         """Check hashed password."""
-        return bcrypt.hashpw('password', self.password_hash)
+        return bcrypt.checkpw(password.encode("utf-8"), self.password_hash.encode('utf-8')) 
 
 # Add Flask-Login functionality separately using composition
 class UserWithLogin(User, SQLAlchemyUserMixin):
