@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Music Chat Page</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='user_profile_page/chat.css') }}" />
+    <link rel="stylesheet" href="chat.css" />
   </head>
   <body>
     <div class="container">
@@ -31,18 +31,46 @@
 
       <main class="main-content">
         <div class="music-player">
+          <label for="music-upload" class="upload-button">Upload Music</label>
           <div class="music-info">
             <img src="https://via.placeholder.com/80" alt="Album Art" />
             <div>
-              <h4>Song Title</h4>
-              <p>Artist Name</p>
+              <h4 id="song-title">Song Title</h4>
+              <p id="artist-name">Artist Name</p>
             </div>
           </div>
-          <div class="music-controls">
-            <button id="prev-button">⏮️</button>
-            <button id="play-button">▶️</button>
-            <button id="pause-button" style="display: none">⏸️</button>
-            <button id="next-button">⏭️</button>
+          <input
+            type="file"
+            id="music-upload"
+            accept="audio/*"
+            multiple
+            style="display: none"
+          />
+
+          <audio id="music-player" style="display: none"></audio>
+          <div class="music-bar">
+            <div class="music-controls">
+              <button id="prev-button">⏮️</button>
+              <button id="play-button">▶️</button>
+              <button id="pause-button" style="display: none">⏸️</button>
+              <button id="next-button">⏭️</button>
+              <input
+                type="range"
+                id="volume-control"
+                min="0"
+                max="100"
+                value="50"
+              />
+            </div>
+
+            <input
+              type="range"
+              id="progress-bar"
+              min="0"
+              max="100"
+              value="0"
+              class="progress-bar"
+            />
           </div>
         </div>
 
@@ -78,6 +106,6 @@
         </div>
       </main>
     </div>
-    <script src="{{ url_for('static', filename='user_profile_page/chat.js') }}"></script>
+    <script src="chat.js"></script>
   </body>
 </html>
