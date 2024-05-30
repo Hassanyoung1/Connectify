@@ -1,22 +1,43 @@
-# backend_connectify/backend/models/user.py
 #!/usr/bin/python3
 """ holds class User"""
+'''from app import bcrypt'''
 import models
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, String
+from sqlalchemy import Column, String, Text
 from sqlalchemy.orm import relationship
-from hashlib import md5
+from flask_login import UserMixin
+import bcrypt 
 
-class User(BaseModel, Base):
+
+
+class SQLAlchemyUserMixin(UserMixin):
+    """Mixin for SQLAlchemy user model to integrate with Flask-Login"""
+    @property
+    def is_active(self):
+        return True
+
+    @property
+    def is_authenticated(self):
+        return True
+
+    @property
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return str(self.id)
+
+class User(BaseModel, Base, SQLAlchemyUserMixin):
     """Representation of a user """
-    if models.storage_t == 'db':
-        __tablename__ = 'users'
-        username = Column(String(128), nullable=False, unique=True)
-        email = Column(String(128), nullable=False, unique=True)
-        password_hash = Column(String(128), nullable=False)
-        playlists = relationship("Playlist", backref="user", cascade="all, delete")
-        chatrooms = relationship("Chatroom", backref="user", cascade="all, delete")
-        sessions = relationship("Session", backref="user", cascade="all, delete")
+ #   if models.storage_t == 'db':
+    __tablename__ = 'users'
+    username = Column(String(128), nullable=False, unique=True)
+    email = Column(String(128), nullable=False, unique=True)
+    password_hash = Column(Text, nullable=True)
+    playlists = relationship("Playlist", backref="user", cascade="all, delete")
+    chatrooms = relationship("Chatroom", backref="user", cascade="all, delete")
+    sessions = relationship("Session", backref="user", cascade="all, delete")
+'''
     else:
         username = ""
         email = ""
@@ -24,12 +45,19 @@ class User(BaseModel, Base):
         playlists = []
         chatrooms = []
         sessions = []
+'''
+def __init__(self, *args, **kwargs):
+    """initializes user"""
+    super().__init__(*args, **kwargs)
+    self.username = kwargs.get('username', "")
+    self.email = kwargs.get('email', "")
+#   salt = bcrypt.gensalt()
+#   self.password_hash = bcrypt.hashpw(kwargs.get('password', "").encode("utf-8"), salt)
 
-    def __init__(self, *args, **kwargs):
-        """initializes user"""
-        super().__init__(*args, **kwargs)
-        if models.storage_t != 'db':
-            self.username = kwargs.get('username', "")
-            self.email = kwargs.get('email', "")
-            self.password_hash = kwargs.get('password_hash', "")
-        self.password_hash = md5(self.password_hash.encode()).hexdigest()
+    def check_password(self, password):
+        """Check hashed password."""
+        return bcrypt.hashpw('password', self.password_hash)
+
+# Add Flask-Login functionality separately using composition
+class UserWithLogin(User, SQLAlchemyUserMixin):
+    pass

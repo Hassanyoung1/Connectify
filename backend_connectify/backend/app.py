@@ -1,16 +1,23 @@
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, request, render_template, redirect, url_for 
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_cors import CORS
 from models import storage
-from models.user import User
+from models.user import User, UserWithLogin
 from models.playlist import Playlist
 from models.track import Track
 from models.album import Album
 from models.chatroom import Chatroom
 from models.conversation import Conversation
 from models.session import Session
-from routes.spotify_api import search_track
+from dotenv import load_dotenv, find_dotenv
+import bcrypt 
+
+'''from routes.spotify_api import spotify_api'''
+from flask_bcrypt import Bcrypt
+
+load_dotenv(find_dotenv())
+
 
 app = Flask(__name__, template_folder='../../frontend_connectify/templates', static_folder='../../frontend_connectify/static')
 app.config['SECRET_KEY'] = 'your_secret_key'
@@ -21,62 +28,64 @@ login_manager = LoginManager(app)
 
 @login_manager.user_loader
 def load_user(user_id):
-    return storage.get(User, user_id)
+    return storage.get(UserWithLogin, user_id)
+
+@app.route('/')
+def index():
+    if current_user.is_authenticated:
+        return render_template('user_profile_page/index.html')
+    else:
+        return redirect(url_for('login'))  # Redirect to login page if not logged in
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'GET':
         return render_template('Reg_page/reg.html')
     
-    data = request.get_json(silent=True)  # Avoid throwing an error if not JSON
-    if not data:  # Check if data is None
-        print("No JSON data received")
+    data = request.get_json(silent=True)  
+    if not data:  
         return jsonify({'error': 'No data sent'}), 400
 
     username = data.get('username')
     email = data.get('email')
     password = data.get('password')
     confirm_password = data.get('confirm_password')
-    
-    if not all([username, email, password, confirm_password]):  # Check that all fields are present
-        missing_fields = [field for field in ['username', 'email', 'password', 'confirm_password'] if not data.get(field)]
-        print(f"Missing fields: {missing_fields}")
-        return jsonify({'error': 'Missing fields', 'missing': missing_fields}), 400
+
+    if not all([username, email, password, confirm_password]):
+        return jsonify({'error': 'Missing fields'}), 400
 
     if password != confirm_password:
-        print("Passwords do not match")
         return jsonify({'error': 'Passwords do not match'}), 400
 
-    existing_user = storage.all(User).values()
+    existing_user = storage.all(UserWithLogin).values()
     if any(user.username == username or user.email == email for user in existing_user):
-        print("Username or email already exists")
         return jsonify({'error': 'Username or email already exists'}), 400
 
-    password_hash = generate_password_hash(password)
+#    password_hash = generate_password_hash(password)
+    salt = bcrypt.gensalt()
+    password_hash = bcrypt.hashpw((password).encode("utf-8"), salt)
     new_user = User(username=username, email=email, password_hash=password_hash)
     storage.new(new_user)
     storage.save()
-    print("User registration successful")
-    return jsonify({'message': 'Registration successful'}), 201
 
+    login_user(new_user)
+    return jsonify({'message': "success!"}), 201
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
-        return render_template('Login_page/login.html') # Make sure this path is correct
+        return render_template('Login_page/login.html')
 
-    # Your existing 'POST' login logic:
     data = request.get_json()
     email = data.get('email')
     password = data.get('password')
-    user = next((u for u in storage.all(User).values() if u.email == email), None)
+    user = next((u for u in storage.all(UserWithLogin).values() if u.email == email), None)
     
     if user and check_password_hash(user.password_hash, password):
         login_user(user)
-        return jsonify({'message': 'Login successful'}), 200
+        return redirect(url_for('index'))  # Redirect to user profile page after successful login
     else:
         return jsonify({'error': 'Invalid email or password'}), 401
-
 
 @app.route('/logout', methods=['POST'])
 @login_required

@@ -4,30 +4,38 @@ document.addEventListener("DOMContentLoaded", () => {
   if (loginForm) {
     loginForm.addEventListener("submit", (e) => {
       e.preventDefault();
+      console.log("submit button clicked");
 
-      const email = loginForm.querySelector('input[type="email"]').value;
-      const password = loginForm.querySelector('input[type="password"]').value;
+      // Get form data
+      const formData = new FormData(loginForm);
+      const email = formData.get("email");
+      const password = formData.get("password");  // Retrieve the password from the form data
 
+      if (!email || !password) {
+        console.error("Email and password are required");
+        return;
+      }
+
+      // Send login data to the backend
       fetch("/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({
+          email,
+          password,
+        }),
       })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.message) {
-          console.log(data.message);
-          // Redirect to the profile page or perform other actions upon successful login
-        } else if (data.error) {
-          console.error(data.error);
-          // Handle errors, such as displaying a message to the user
-        }
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+        .then((response) => response.json())
+        .then(() => {
+          console.log("Login successful");
+          window.location.replace("/");          
+        })
+        .catch((error) => {
+          // Handle login error
+          console.error(error);
+        });
     });
   }
 });

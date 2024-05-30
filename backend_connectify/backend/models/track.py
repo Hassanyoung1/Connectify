@@ -8,18 +8,18 @@ from sqlalchemy.orm import relationship
 
 class Track(BaseModel, Base):
     """Representation of a track"""
-    if models.storage_t == 'db':
-        __tablename__ = 'tracks'
-        name = Column(String(128), nullable=False)
-        artist = Column(String(128
-), nullable=False)
-        album_id = Column(String(60), ForeignKey('albums.id'), nullable=True)
-        duration = Column(Integer, nullable=False)
-        spotify_id = Column(String(128), nullable=True)
-        spotify_url = Column(String(256), nullable=True)
-        rating = Column(Float, nullable=True)
-        playlist_id = Column(String(60), ForeignKey('playlists.id'), nullable=False)
-        album = relationship("Album", back_populates="tracks")
+#    if models.storage_t == 'db'
+    __tablename__ = 'tracks'
+    name = Column(String(128), nullable=False)
+    artist = Column(String(128), nullable=False)
+    album_id = Column(String(60), ForeignKey('albums.id'), nullable=True)
+    duration = Column(Integer, nullable=False)
+    spotify_id = Column(String(128), nullable=True)
+    spotify_url = Column(String(256), nullable=True)
+    rating = Column(Float, nullable=True)
+    playlist_id = Column(String(60), ForeignKey('playlists.id'), nullable=False)
+    album = relationship("Album", back_populates="tracks")
+    '''
     else:
         name = ""
         artist = ""
@@ -29,7 +29,7 @@ class Track(BaseModel, Base):
         spotify_url = ""
         rating = None
         playlist_id = ""
-
+    '''
     def __init__(self, *args, **kwargs):
         """Initializes Track"""
         super().__init__(*args, **kwargs)

@@ -17,6 +17,9 @@ from os import getenv
 import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
+from dotenv import load_dotenv, find_dotenv
+
+load_dotenv(find_dotenv())
 
 classes = {"User": User, "Playlist": Playlist, "Track": Track, "Album": Album, "Chatroom": Chatroom, "Conversation": Conversation, "Session": Session}
 
@@ -54,6 +57,7 @@ class DBStorage:
     def new(self, obj):
         """Add the object to the current database session"""
         self.__session.add(obj)
+        print("new user added from database storage")
 
     def save(self):
         """Commit all changes of the current database session"""

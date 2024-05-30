@@ -8,18 +8,19 @@ from sqlalchemy.orm import relationship
 
 class Album(BaseModel, Base):
     """Representation of an album"""
-    if models.storage_t == 'db':
-        __tablename__ = 'albums'
-        name = Column(String(128), nullable=False)
-        artist = Column(String(128), nullable=False)
-        release_year = Column(Integer, nullable=True)
-        tracks = relationship("Track", back_populates="album", cascade="all, delete")
+ #   if models.storage_t == 'db'
+    __tablename__ = 'albums'
+    name = Column(String(128), nullable=False)
+    artist = Column(String(128), nullable=False)
+    release_year = Column(Integer, nullable=True)
+    tracks = relationship("Track", back_populates="album", cascade="all, delete")
+    '''
     else:
         name = ""
         artist = ""
         release_year = None
         tracks = []
-
+    '''
     def __init__(self, *args, **kwargs):
         """Initializes Album"""
         super().__init__(*args, **kwargs)
