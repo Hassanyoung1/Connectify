@@ -30,6 +30,12 @@ html {
   animation: fadeIn 1.5s ease-in-out;
 }
 
+.app-name {
+  color: red;
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
 .register-box h2 {
   margin: 20px 0 20px;
   color: #fff;
@@ -107,26 +113,4 @@ html {
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-.google-logo {
-  width: 20px !important; /* adjust as needed */
-  height: 20px !important; /* adjust as needed */
-}
-
-.g-signin2 {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-.g-signin2.customGButton {
-  display: inline-flex;
-  align-items: center;
-  background-color: #ffffff;
-  color: white;
-  width: 200px;
-  height: 40px;
-  border-radius: 25px;
 }

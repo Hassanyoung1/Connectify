@@ -31,23 +31,37 @@
 
       <main class="main-content">
         <div class="music-player">
+          <label for="music-upload" class="upload-button">Upload Music</label>
           <div class="music-info">
-            <img src="https://via.placeholder.com/80" alt="Album Art" />
+            <img
+              id="album-art"
+              src="https://via.placeholder.com/80"
+              alt="Album Art"
+            />
             <div>
-              <h4>Song Title</h4>
-              <p>Artist Name</p>
+              <h4 id="song-title">Song Title</h4>
+              <p id="artist-name">Artist Name</p>
             </div>
           </div>
+          <input
+            type="file"
+            id="music-upload"
+            accept="audio/*"
+            style="display: none"
+            multiple
+          />
+          <audio id="music-player" controls autoplay></audio>
           <div class="music-controls">
-            <button id="prev-button">⏮️</button>
-            <button id="play-button">▶️</button>
-            <button id="pause-button" style="display: none">⏸️</button>
-            <button id="next-button">⏭️</button>
+            <button id="prev-button">&#9664;</button>
+            <button id="play-button">&#9654;</button>
+            <button id="pause-button" style="display: none">
+              &#10074;&#10074;
+            </button>
+            <button id="next-button">&#9654;</button>
           </div>
         </div>
 
         <div class="chat-container">
-          <!-- <div class="chat-container-inner"> -->
           <header class="chat-header">
             <img
               src="https://via.placeholder.com/50"
@@ -75,7 +89,6 @@
               placeholder="Type a message..."
             />
             <button id="send-button">Send</button>
-            <!-- </div> -->
           </div>
         </div>
       </main>

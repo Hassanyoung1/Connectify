@@ -70,3 +70,83 @@ document
     document.getElementById("usernameTitle").textContent = username;
     window.location.href = "../Reg_page/reg.html";
   });
+
+// Get the elements
+let featuredTracksMessage = document.getElementById("featured-tracks-message");
+let albumsMessage = document.getElementById("albums-message");
+let recentlyLikedMessage = document.getElementById("recently-liked-message");
+
+// Fetch the data from the Spotify API
+// Note: You'll need to replace 'OUR_SPOTIFY_API_TOKEN' with your actual Spotify API token
+
+// Fetch featured tracks
+fetch("https://api.spotify.com/v1/me/top/tracks", {
+  headers: {
+    Authorization: `Bearer OUR_SPOTIFY_API_TOKEN`,
+  },
+})
+  .then((response) => response.json())
+  .then((data) => {
+    // Update the messages based on the data
+    if (data.items.length > 0) {
+      featuredTracksMessage.textContent = "Showing your featured tracks...";
+      let featuredTracksContainer = document.getElementById(
+        "featured-tracks-container"
+      );
+      data.items.forEach((track) => {
+        let trackElement = document.createElement("div");
+        trackElement.textContent = track.name; // Assuming 'name' is a property of track. Add the right property here
+        featuredTracksContainer.appendChild(trackElement);
+      });
+    } else {
+      featuredTracksMessage.textContent =
+        "No featured tracks yet. Start adding your favorite songs!";
+    }
+  });
+
+// Fetch albums
+fetch("https://api.spotify.com/v1/me/albums", {
+  headers: {
+    Authorization: `Bearer OUR_SPOTIFY_API_TOKEN`,
+  },
+})
+  .then((response) => response.json())
+  .then((data) => {
+    if (data.items.length > 0) {
+      albumsMessage.textContent = "Showing your albums...";
+      let albumsContainer = document.getElementById("albums-container");
+      data.items.forEach((album) => {
+        let albumElement = document.createElement("div");
+        albumElement.textContent = album.name; // Assuming 'name' is a property of album. Add the right property here
+        albumsContainer.appendChild(albumElement);
+      });
+    } else {
+      albumsMessage.textContent =
+        "No albums added yet. Start adding your favorite albums!";
+    }
+  });
+
+// Fetch recently liked tracks
+fetch("https://api.spotify.com/v1/me/tracks", {
+  headers: {
+    Authorization: `Bearer OUR_SPOTIFY_API_TOKEN`,
+  },
+})
+  .then((response) => response.json())
+  .then((data) => {
+    if (data.items.length > 0) {
+      recentlyLikedMessage.textContent =
+        "Showing your recently liked tracks...";
+      let recentlyLikedTracksContainer = document.getElementById(
+        "recently-liked-tracks-container"
+      );
+      data.items.forEach((track) => {
+        let trackElement = document.createElement("div");
+        trackElement.textContent = track.name; // Assuming 'name' is a property of track. Add the right property here
+        recentlyLikedTracksContainer.appendChild(trackElement);
+      });
+    } else {
+      recentlyLikedMessage.textContent =
+        "No recently liked tracks. Start exploring music and like your favorites!";
+    }
+  });
