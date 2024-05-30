@@ -1,3 +1,6 @@
+const passwordValidator = require('password-validator');
+
+
 document.addEventListener("DOMContentLoaded", () => {
   const registerForm = document.getElementById("registerForm");
 
@@ -12,19 +15,35 @@ document.addEventListener("DOMContentLoaded", () => {
       const password = formData.get("password");
       const confirmPassword = formData.get("confirm_password");
 
-    /*  // Check if password and confirm password match
+
+      console.log("IN JS SCRIPT")
       if (password !== confirmPassword) {
-        console.error("Passwords do not match");
+        alert("Passwords do not match");
         return;
       }
-
-      if (email === "admin@gmail.com" && password === "user") {
-        window.location.replace("/");
-      } else {
-        alert("Invalid information");
+      const schema = new passwordValidator();    
+      schema
+      .is().min(8)                                    // Minimum length 8
+      .is().max(100)                                  // Maximum length 100
+      .has().uppercase()                              // Must have uppercase letters
+      .has().lowercase()                              // Must have lowercase letters
+      .has().digits()                                // Must have at least 2 digits
+      .has().not().spaces()                           // Should not have spaces
+      .is().not().oneOf(['Passw0rd', 'Password123']); // Blacklist these values
+      
+      // Validate against a password string
+      if (!schema.validate(password)) {
+        validationDetails = schema.validate(password, { details: true })
+        console.log(validationDetails)
+        const messages = validationDetails.map((error) => error.message)
+        // for (let msg of messages) {
+        //     console.log(`${msg}`);
+        //     alert(`${msg}`)
+        // }
+        alert(messages.join('\n'))
         return;
-        'https://' + window.location.hostname + "/"
-      }*/
+    }
+      
 
       // Send registration data to the backend
       fetch("/register", {
