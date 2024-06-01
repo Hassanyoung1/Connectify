@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Connectify - Login Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='Login_page/styles.css') }}" />
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta
+      name="google-signin-client_id"
+      content="458420249047-utql1jm3sjvkrjb26oaemder2qogdras.apps.googleusercontent.com"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="login-box">
+        <h2>Login</h2>
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+        <form id="loginForm">
+          <fieldset>
+            <legend>Login Information</legend>
+            <div class="input-box">
+              <input type="email" name="email" required />
+              <label>Email</label>
+            </div>
+            <div class="input-box">
+              <input type="password" name="password" required />
+              <label>Password</label>
+            </div>
+          </fieldset>
+          <button type="submit" class="btn">Login</button>
+        </form>
+        <p class="link-text">
+          Don't have an account? <a href="{{ url_for('register') }}">Register</a>
+        </p>
+      </div>
+    </div>
+    <script src="{{ url_for('static', filename='Login_page/scripts.js') }}"></script>
+  </body>
+</html>
