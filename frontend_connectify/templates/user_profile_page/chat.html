@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Music Chat Page</title>
-    <link rel="stylesheet" href="chat.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='user_profile_page/chat.css') }}" />
   </head>
   <body>
     <div class="container">
@@ -106,6 +106,6 @@
         </div>
       </main>
     </div>
-    <script src="chat.js"></script>
+    <script src="{{ url_for('static', filename='user_profile_page/chat.js') }}"></script>
   </body>
 </html>

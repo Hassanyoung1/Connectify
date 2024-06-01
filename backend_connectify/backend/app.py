@@ -92,6 +92,20 @@ def logout():
     logout_user()
     return jsonify({'message': 'Logout successful'}), 200
 
+@app.route('/chat', methods=['GET'])
+def chat():
+    print("Chat route hit")
+    return render_template('user_profile_page/chat.html')
+
+@app.route('/send_message', methods=['POST'])
+def send_message():
+    data = request.get_json()
+    message = data.get('message')
+
+    # Process the message or save it to a database
+    # ...
+    return jsonify({'status': 'success'})
+
 # Playlist management routes
 @app.route('/playlists', methods=['POST'])
 @login_required
@@ -313,4 +327,4 @@ def delete_session(session_id):
         return jsonify({'error': 'Session not found'}), 404
     
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5012, debug=True)
+    app.run(host='0.0.0.0', port=5013, debug=True)

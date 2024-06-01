@@ -1,4 +1,3 @@
-// DOM manipulation code
 document.addEventListener("DOMContentLoaded", () => {
   const inviteButton = document.getElementById("invite-button");
   const messageButton = document.getElementById("message-button");
@@ -11,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   messageButton.addEventListener("click", () => {
-    window.location.href = "chat.html";
+    window.location.href = "/chat";
   });
 });
 
