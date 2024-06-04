@@ -57,7 +57,7 @@ Connectify is an engaging online music player platform that bridges the gap betw
 - **Testing and Quality Assurance:** Commit to extensive testing protocols to iron out any kinks.
 - **Scalability and Performance:** Craft the application's infrastructure with room for growth and user base expansion.
 
-#ALEX
-#Hassan
+# ALEX
+# Hassan
 
 We invite you to join us on this voyage to transform the music listening experience. Stay tuned!
