@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, render_template, redirect, url_for 
+from flask import Flask, jsonify, request, render_template, redirect, url_for
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_cors import CORS
@@ -11,7 +11,7 @@ from models.chatroom import Chatroom
 from models.conversation import Conversation
 from models.session import Session
 from dotenv import load_dotenv, find_dotenv
-import bcrypt 
+import bcrypt
 
 '''from routes.spotify_api import spotify_api'''
 from flask_bcrypt import Bcrypt
@@ -41,9 +41,9 @@ def index():
 def register():
     if request.method == 'GET':
         return render_template('Reg_page/reg.html')
-    
-    data = request.get_json(silent=True)  
-    if not data:  
+
+    data = request.get_json(silent=True)
+    if not data:
         return jsonify({'error': 'No data sent'}), 400
 
     username = data.get('username')
@@ -325,6 +325,6 @@ def delete_session(session_id):
         return jsonify({'message': 'Session deleted successfully'}), 200
     else:
         return jsonify({'error': 'Session not found'}), 404
-    
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5013, debug=True)
+    app.run(host='0.0.0.0', port=5023, debug=True)
