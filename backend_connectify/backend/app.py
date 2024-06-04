@@ -16,18 +16,32 @@ import bcrypt
 '''from routes.spotify_api import spotify_api'''
 from flask_bcrypt import Bcrypt
 
+# Load environment variables from a .env file
 load_dotenv(find_dotenv())
 
-
+# Initialize the Flask application
 app = Flask(__name__, template_folder='../../frontend_connectify/templates', static_folder='../../frontend_connectify/static')
 app.config['SECRET_KEY'] = 'your_secret_key'
 
-CORS(app)  # Enable CORS for all routes
+# Enable Cross-Origin Resource Sharing (CORS) for all routes
+CORS(app)  
 
+# Initialize the Flask-Login extension for user session management
 login_manager = LoginManager(app)
 
 @login_manager.user_loader
 def load_user(user_id):
+"""
+    This function loads a user from the database by their user ID.
+    It is used by Flask-Login to manage user sessions.
+
+    Args:
+        user_id (str): The ID of the user to load.
+
+    Returns:
+        User: The user object corresponding to the provided user ID.
+    """
+
     return storage.get(UserWithLogin, user_id)
 
 @app.route('/')
