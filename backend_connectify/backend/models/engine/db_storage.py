@@ -1,7 +1,23 @@
 # backend_connectify/backend/models/engine/db_storage.py
 #!/usr/bin/python3
 """
-Contains the class DBStorage
+DBStorage Module
+================
+
+This module defines the DBStorage class, which provides an interface for
+interacting with a MySQL database using SQLAlchemy. It supports basic
+CRUD (Create, Read, Update, Delete) operations and handles database
+sessions.
+
+Classes:
+--------
+    DBStorage: A class to manage database storage for various models.
+
+Usage:
+------
+    from models.engine.db_storage import DBStorage
+    storage = DBStorage()
+    storage.reload()
 """
 
 import models
@@ -29,7 +45,12 @@ class DBStorage:
     __session = None
 
     def __init__(self):
-        """Instantiate a DBStorage object"""
+        
+        """Instantiate a DBStorage object
+
+        This initializes the database connection using environment
+        variables for MySQL credentials and settings.
+        """
         CONNECTIFY_MYSQL_USER = getenv('CONNECTIFY_MYSQL_USER')
         CONNECTIFY_MYSQL_PWD = getenv('CONNECTIFY_MYSQL_PWD')
         CONNECTIFY_MYSQL_HOST = getenv('CONNECTIFY_MYSQL_HOST')
@@ -44,7 +65,16 @@ class DBStorage:
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
-        """Query on the current database session"""
+        """Query all objects in the current database session
+
+        Args:
+            cls (str or class, optional): The class to query. If None,
+                                          queries all classes.
+
+        Returns:
+            dict: A dictionary of all queried objects, keyed by
+                  <class name>.<object id>.
+        """
         new_dict = {}
         for clss in classes:
             if cls is None or cls is classes[clss] or cls is clss:
@@ -55,7 +85,11 @@ class DBStorage:
         return new_dict
 
     def new(self, obj):
-        """Add the object to the current database session"""
+        """Add an object to the current database session
+
+        Args:
+            obj (BaseModel): The object to add to the session.
+        """
         self.__session.add(obj)
         print("new user added from database storage")
 
@@ -87,5 +121,9 @@ class DBStorage:
         return self.__session.query(cls).count()
 
     def close(self):
-        """Call remove() method on the private session attribute"""
+        """Close the current session
+
+        This method removes the current session, ensuring all changes are
+        committed and the connection is closed properly.
+        """
         self.__session.remove()
