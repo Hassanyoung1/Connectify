@@ -1,13 +1,47 @@
 # backend_connectify/backend/models/track.py
 #!/usr/bin/python3
-""" holds class Track"""
+"""
+Track Module
+============
+
+This module defines the Track class, which represents a track in the
+database. The Track class inherits from BaseModel and Base, providing
+attributes and relationships specific to a track.
+
+Classes:
+--------
+    Track: A class to manage track information.
+
+Usage:
+------
+    from models.track import Track
+    new_track = Track(name="Song Title", artist="Artist Name", duration=180, playlist_id="playlist1234")
+    new_track.save()
+"""
+
 import models
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, Float, ForeignKey
 from sqlalchemy.orm import relationship
 
 class Track(BaseModel, Base):
-    """Representation of a track"""
+    """
+    Representation of a track.
+
+    Attributes:
+    -----------
+        __tablename__ (str): The name of the MySQL table to store tracks.
+        name (sqlalchemy.String): The name of the track, cannot be null.
+        artist (sqlalchemy.String): The artist of the track, cannot be null.
+        album_id (sqlalchemy.String): The ID of the album to which the track belongs, nullable.
+        duration (sqlalchemy.Integer): The duration of the track in seconds, cannot be null.
+        spotify_id (sqlalchemy.String): The Spotify ID of the track, nullable.
+        spotify_url (sqlalchemy.String): The Spotify URL of the track, nullable.
+        rating (sqlalchemy.Float): The rating of the track, nullable.
+        playlist_id (sqlalchemy.String): The ID of the playlist to which the track belongs, cannot be null.
+        album (sqlalchemy.orm.relationship): Relationship to the Album class.
+    """
+
 #    if models.storage_t == 'db'
     __tablename__ = 'tracks'
     name = Column(String(128), nullable=False)
@@ -31,7 +65,34 @@ class Track(BaseModel, Base):
         playlist_id = ""
     '''
     def __init__(self, *args, **kwargs):
-        """Initializes Track"""
+        """
+        Initializes a Track instance.
+
+        Args:
+        -----
+            *args: Variable length argument list.
+            **kwargs: Arbitrary keyword arguments, typically including:
+                - name (str): The name of the track.
+                - artist (str): The artist of the track.
+                - album_id (str): The ID of the album to which the track belongs.
+                - duration (int): The duration of the track in seconds.
+                - spotify_id (str): The Spotify ID of the track.
+                - spotify_url (str): The Spotify URL of the track.
+                - rating (float): The rating of the track.
+                - playlist_id (str): The ID of the playlist to which the track belongs.
+
+        Attributes:
+        -----------
+            name (str): The name of the track.
+            artist (str): The artist of the track.
+            album_id (str): The ID of the album to which the track belongs.
+            duration (int): The duration of the track in seconds.
+            spotify_id (str): The Spotify ID of the track.
+            spotify_url (str): The Spotify URL of the track.
+            rating (float): The rating of the track.
+            playlist_id (str): The ID of the playlist to which the track belongs.
+        """
+
         super().__init__(*args, **kwargs)
         if models.storage_t != 'db':
             self.name = kwargs.get('name', "")

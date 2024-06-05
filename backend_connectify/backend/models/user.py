@@ -1,6 +1,24 @@
 #!/usr/bin/python3
-""" holds class User"""
-'''from app import bcrypt'''
+"""
+User Module
+===========
+
+This module defines the User class, which represents a user in the database.
+The User class inherits from BaseModel, Base, and SQLAlchemyUserMixin, providing
+attributes and methods specific to a user.
+
+Classes:
+--------
+    SQLAlchemyUserMixin: A mixin class for SQLAlchemy user model to integrate with Flask-Login.
+    User: A class to manage user information.
+
+Usage:
+------
+    from models.user import User
+    new_user = User(username="example_user", email="user@example.com")
+    new_user.save()
+"""
+
 import models
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Text
@@ -11,7 +29,16 @@ import bcrypt
 
 
 class SQLAlchemyUserMixin(UserMixin):
-    """Mixin for SQLAlchemy user model to integrate with Flask-Login"""
+    """
+    Mixin for SQLAlchemy user model to integrate with Flask-Login.
+
+    Attributes:
+    -----------
+        is_active (bool): Indicates if the user account is active.
+        is_authenticated (bool): Indicates if the user is authenticated.
+        is_anonymous (bool): Indicates if the user is an anonymous user.
+    """
+
     @property
     def is_active(self):
         return True
@@ -28,7 +55,19 @@ class SQLAlchemyUserMixin(UserMixin):
         return str(self.id)
 
 class User(BaseModel, Base, SQLAlchemyUserMixin):
-    """Representation of a user """
+     """
+    Representation of a user.
+
+    Attributes:
+    -----------
+        __tablename__ (str): The name of the MySQL table to store users.
+        username (sqlalchemy.String): The username of the user, cannot be null and must be unique.
+        email (sqlalchemy.String): The email address of the user, cannot be null and must be unique.
+        password_hash (sqlalchemy.Text): The hashed password of the user, nullable.
+        playlists (sqlalchemy.orm.relationship): Relationship to the Playlist class.
+        chatrooms (sqlalchemy.orm.relationship): Relationship to the Chatroom class.
+        sessions (sqlalchemy.orm.relationship): Relationship to the Session class.
+    """
  #   if models.storage_t == 'db':
     __tablename__ = 'users'
     username = Column(String(128), nullable=False, unique=True)
